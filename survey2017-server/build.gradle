@@ -2,7 +2,8 @@ group 'info.miwpayou0808.survey2017-server'
 version '1.0-beta'
 
 buildscript {
-    ext.kotlin_version = '1.1.2-2'
+    ext.kotlin_version = '1.1.51'
+    ext.ktor_version = '0.4.1-alpha-16'
 
     repositories {
         mavenCentral()
@@ -17,11 +18,32 @@ apply plugin: 'kotlin'
 
 sourceCompatibility = 1.8
 
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}
+
 repositories {
     mavenCentral()
+    maven { url "https://dl.bintray.com/kotlin/kotlinx" }
+    maven { url "https://dl.bintray.com/kotlin/ktor" }
 }
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+    compile "org.jetbrains.ktor:ktor-core:$ktor_version"
+//    compile "org.jetbrains.ktor:ktor-hosts:$ktor_version"
+    compile "org.jetbrains.ktor:ktor-features:$ktor_version"
+    compile "org.jetbrains.ktor:ktor-jetty:$ktor_version"
+    compile "org.jetbrains.ktor:ktor-netty:$ktor_version"
+    compile "ch.qos.logback:logback-classic:1.2.1"
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
